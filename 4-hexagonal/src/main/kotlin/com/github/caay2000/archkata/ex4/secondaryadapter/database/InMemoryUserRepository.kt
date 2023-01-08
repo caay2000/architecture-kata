@@ -1,8 +1,8 @@
-package com.github.caay2000.archkata.ex4.database
+package com.github.caay2000.archkata.ex4.secondaryadapter.database
 
 import com.github.caay2000.archkata.ex4.application.UserRepository
 import com.github.caay2000.archkata.ex4.domain.User
-import com.github.caay2000.archkata.ex4.secondaryadapter.database.Datasource
+import com.github.caay2000.archkata.ex4.infra.Datasource
 
 class InMemoryUserRepository(private val datasource: Datasource) : UserRepository {
 

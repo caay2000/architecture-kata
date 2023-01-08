@@ -1,4 +1,4 @@
-package com.github.caay2000.archkata.ex4.secondaryadapter.database
+package com.github.caay2000.archkata.ex4.infra
 
 interface Datasource {
 
