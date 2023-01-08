@@ -23,7 +23,7 @@ messages of the people we follow and the ones they liked!
 But... we just have a minimum set of actions... our knowledge is limited...
 
 We can create users, publish messages, view other users with their messages, follow other users and view our timeline with the messages of
-the people we follow.
+the people we follow. And nothing is persistent, just in memory storage...
 
 ## Exercise
 

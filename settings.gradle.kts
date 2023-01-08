@@ -1,4 +1,6 @@
 rootProject.name = "architecture-kata"
 
-// include("0-common")
 include("1-start")
+include("2-refactor")
+include("3-dependencyinjection")
+include("4-hexagonal")

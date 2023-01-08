@@ -1,4 +1,4 @@
-package com.github.caay2000.archkata
+package com.github.caay2000.archkata.ex1
 
 import io.ktor.client.request.get
 import io.ktor.client.request.post
@@ -72,11 +72,11 @@ class ApplicationTest {
                 "name": "myName",
                 "messages": [
                     {
-                        "date": "$date",
                         "id": 1,
-                        "message": "Hello, how are you?",
+                        "userId": 1,
                         "user": "myName",
-                        "userId": 1
+                        "message": "Hello, how are you?",
+                        "date": "$date"
                     }
                 ],
 
@@ -118,11 +118,11 @@ class ApplicationTest {
                 "name": "myName",
                 "messages": [
                     {
-                        "date": "$date",
                         "id": 1,
-                        "message": "Hello, how are you?",
+                        "userId": 1,
                         "user": "myName",
-                        "userId": 1
+                        "message": "Hello, how are you?",
+                        "date": "$date"
                     }
                 ],
                 "follows": [
@@ -158,18 +158,18 @@ class ApplicationTest {
                 "name": "myName",
                 "messages": [
                     {
-                        "date": "$dateMsg2",
                         "id": 2,
-                        "message": "I'm fine thanks!",
+                        "userId": 2,
                         "user": "anotherName",
-                        "userId": 2
+                        "message": "I'm fine thanks!",
+                        "date": "$dateMsg2"
                     },
                     {
-                        "date": "$dateMsg1",
                         "id": 1,
-                        "message": "Hello, how are you?",
+                        "userId": 1,
                         "user": "myName",
-                        "userId": 1
+                        "message": "Hello, how are you?",
+                        "date": "$dateMsg1"
                     }
                 ]
             }

@@ -1,4 +1,4 @@
-package com.github.caay2000.archkata
+package com.github.caay2000.archkata.ex1
 
 import java.time.LocalDateTime
 
