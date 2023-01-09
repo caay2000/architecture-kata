@@ -1,14 +1,13 @@
 package com.github.caay2000.archkata.ex4
 
 import com.github.caay2000.archkata.ex4.application.SocialNetworkService
-import com.github.caay2000.archkata.ex4.infra.ApplicationContext.getBean
-import com.github.caay2000.archkata.ex4.infra.ApplicationContext.registerBean
 import com.github.caay2000.archkata.ex4.infra.Datasource
 import com.github.caay2000.archkata.ex4.infra.InMemoryDatasource
 import com.github.caay2000.archkata.ex4.primaryadapter.http.configureRouting
-import com.github.caay2000.archkata.ex4.secondaryadapter.database.InMemoryUserRepository
 import com.github.caay2000.archkata.ex4.secondaryadapter.date.LocalDateProvider
-import com.github.caay2000.archkata.ex4.secondaryadapter.uuid.UUIDIdGenerator
+import com.github.caay2000.archkata.ex4.secondaryadapter.uuid.UUIDGenerator
+import com.github.caay2000.archkata.libraries.di.ApplicationContext.getBean
+import com.github.caay2000.archkata.libraries.di.ApplicationContext.registerBean
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.Application
 import io.ktor.server.application.install
@@ -22,25 +21,16 @@ fun Application.module() {
     configureSerialization()
 }
 
-fun Application.cleanDatabase() {
-    val datasource = getBean<Datasource>("datasource")
+fun cleanDatabase() {
+    val datasource: Datasource = getBean(Datasource::class)
     datasource.clean()
 }
 
-fun Application.dependencyInjection() {
-    registerBean("datasource", InMemoryDatasource())
-    registerBean("userRepository", InMemoryUserRepository(getBean("datasource")))
-    registerBean("idGenerator", UUIDIdGenerator())
-    registerBean("dateProvider", LocalDateProvider())
-
-    registerBean(
-        name = "socialNetworkService",
-        bean = SocialNetworkService(
-            getBean("userRepository"),
-            getBean("idGenerator"),
-            getBean("dateProvider")
-        )
-    )
+fun dependencyInjection() {
+    registerBean(InMemoryDatasource::class)
+    registerBean(UUIDGenerator::class)
+    registerBean(LocalDateProvider::class)
+    registerBean(SocialNetworkService::class)
 }
 
 fun Application.configureSerialization() {

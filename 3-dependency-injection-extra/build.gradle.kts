@@ -25,6 +25,8 @@ dependencies {
     implementation("io.ktor:ktor-server-netty:2.2.1")
     implementation("io.ktor:ktor-server-content-negotiation:2.2.1")
     implementation("io.ktor:ktor-serialization-kotlinx-json:2.2.1")
+
+    implementation("io.github.microutils:kotlin-logging-jvm:3.0.4")
     implementation("ch.qos.logback:logback-classic:1.4.5")
 
     testImplementation(kotlin("test"))
