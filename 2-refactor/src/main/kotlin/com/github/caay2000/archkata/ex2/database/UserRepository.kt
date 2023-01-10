@@ -5,7 +5,7 @@ import java.util.UUID
 
 class UserRepository {
 
-    private val database = InMemoryDatabase()
+    private val database: Datasource = InMemoryDatasource()
 
     fun save(user: User) {
         database.save(TABLE_NAME, user.id.toString(), user)

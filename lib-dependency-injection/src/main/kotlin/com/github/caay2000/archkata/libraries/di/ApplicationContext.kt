@@ -1,7 +1,8 @@
 package com.github.caay2000.archkata.libraries.di
 
+import com.github.caay2000.archkata.libraries.di.ApplicationContextException.BeanCannotBeInstantiated
 import com.github.caay2000.archkata.libraries.di.ApplicationContextException.BeanNotFound
-import com.github.caay2000.archkata.libraries.di.ApplicationContextException.MultipleBeansCannotBeInitialized
+import com.github.caay2000.archkata.libraries.di.ApplicationContextException.InterfaceCannotBeRegistered
 import com.github.caay2000.archkata.libraries.di.ApplicationContextException.MultipleBeansFound
 import mu.KLogger
 import mu.KotlinLogging
@@ -17,15 +18,10 @@ object ApplicationContext {
 
     private val context: Context = Context()
 
-    fun registerBean(clazz: KClass<*>) {
-        context.registerBean(clazz)
-    }
-
     @Suppress("UNCHECKED_CAST")
-    fun <T> getBean(clazz: KClass<*>): T {
-        return context.getBean(clazz)
-    }
-
+    fun <T> getBean(clazz: KClass<*>): T = context.getBean(clazz)
+    fun registerBean(clazz: KClass<*>) = context.registerBean(clazz)
+    fun init() = context.instantiateBeans()
     fun clear() = context.clear()
 
     private class Context {
@@ -34,21 +30,38 @@ object ApplicationContext {
         private val uninitializedBeans: MutableSet<KClass<*>> = mutableSetOf()
 
         @Suppress("UNCHECKED_CAST")
-        fun <T> getBean(clazz: KClass<*>): T {
-            if (uninitializedBeans.isNotEmpty()) {
-                initializeBeans(uninitializedBeans)
-            }
-            return findBeanByType(clazz.createType()) as T
-        }
+        fun <T> getBean(clazz: KClass<*>): T = findBeanByType(clazz.createType()) as T
 
         fun registerBean(clazz: KClass<*>) {
-            val constructor: KFunction<Any> = clazz.primaryConstructor!!
-            if (constructor.parameters.isEmpty()) {
-                addBeanToContext(constructor.call())
-            } else {
-                uninitializedBeans.add(clazz)
+            if (clazz.java.isInterface) throw InterfaceCannotBeRegistered(clazz.toString())
+            uninitializedBeans.add(clazz)
+        }
+
+        fun instantiateBeans(beansToInitialize: Set<KClass<*>> = uninitializedBeans) {
+            val uninitializedBeans = mutableSetOf<KClass<*>>()
+            beansToInitialize.forEach {
+                try {
+                    val bean = instantiateSingleBean(it)
+                    addBeanToContext(bean)
+                } catch (e: BeanNotFound) {
+                    uninitializedBeans.add(it)
+                }
+            }
+            if (uninitializedBeans.isNotEmpty()) {
+                if (beansToInitialize.size != uninitializedBeans.size) initializeBeans(uninitializedBeans)
+                else throw BeanCannotBeInstantiated(beansToInitialize)
             }
         }
+
+        private fun instantiateSingleBean(clazz: KClass<*>): Any {
+            val constructor: KFunction<Any> = clazz.primaryConstructor!!
+            val parameters = findConstructorParameters(constructor)
+            return constructor.call(*parameters)
+        }
+
+        private fun findConstructorParameters(constructor: KFunction<Any>): Array<Any> =
+            if (constructor.parameters.isEmpty()) arrayOf()
+            else constructor.parameters.map { findBeanByType(it.type) }.toTypedArray()
 
         fun clear() {
             context.clear()
@@ -81,7 +94,7 @@ object ApplicationContext {
             }
             if (uninitializedBeans.isNotEmpty()) {
                 if (beansToInitialize.size != uninitializedBeans.size) initializeBeans(uninitializedBeans)
-                else throw MultipleBeansCannotBeInitialized(beansToInitialize)
+                else throw BeanCannotBeInstantiated(beansToInitialize)
             }
         }
 

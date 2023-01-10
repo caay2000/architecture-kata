@@ -1,9 +1,10 @@
 package com.github.caay2000.archkata.ex3
 
-import com.github.caay2000.archkata.ex3.infra.InMemoryDatasource
 import com.github.caay2000.archkata.ex3.infra.LocalDateProvider
 import com.github.caay2000.archkata.ex3.infra.UUIDGenerator
+import com.github.caay2000.archkata.ex3.repository.UserRepository
 import com.github.caay2000.archkata.ex3.service.SocialNetworkService
+import com.github.caay2000.archkata.libraries.db.InMemoryDatasource
 import io.ktor.http.HttpStatusCode
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.Application
@@ -31,8 +32,9 @@ fun start() {
     val datasource = InMemoryDatasource()
     val idGenerator = UUIDGenerator()
     val dateProvider = LocalDateProvider()
+    val userRepository = UserRepository(datasource)
 
-    service = SocialNetworkService(datasource, idGenerator, dateProvider)
+    service = SocialNetworkService(userRepository, idGenerator, dateProvider)
 }
 
 fun Application.configureRouting() {

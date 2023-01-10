@@ -1,10 +1,11 @@
 package com.github.caay2000.archkata.ex3x
 
-import com.github.caay2000.archkata.ex3x.infra.InMemoryDatasource
+import com.github.caay2000.archkata.ex3x.database.UserRepository
 import com.github.caay2000.archkata.ex3x.infra.LocalDateProvider
 import com.github.caay2000.archkata.ex3x.infra.UUIDGenerator
 import com.github.caay2000.archkata.ex3x.infra.di.ApplicationContext
 import com.github.caay2000.archkata.ex3x.service.SocialNetworkService
+import com.github.caay2000.archkata.libraries.db.InMemoryDatasource
 import io.ktor.http.HttpStatusCode
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.Application
@@ -30,6 +31,7 @@ fun Application.start() {
     ApplicationContext.registerBean(InMemoryDatasource::class)
     ApplicationContext.registerBean(UUIDGenerator::class)
     ApplicationContext.registerBean(LocalDateProvider::class)
+    ApplicationContext.registerBean(UserRepository::class)
     ApplicationContext.registerBean(SocialNetworkService::class)
 }
 

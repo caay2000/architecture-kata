@@ -1,7 +1,7 @@
-package com.github.caay2000.archkata.ex3x.infra
+package com.github.caay2000.archkata.ex2.database
 
 @Suppress("UNCHECKED_CAST")
-class InMemoryDatasource : Datasource {
+internal class InMemoryDatasource : Datasource {
 
     private val database: MutableMap<String, Map<String, *>> = mutableMapOf()
 
@@ -16,7 +16,8 @@ class InMemoryDatasource : Datasource {
         return value
     }
 
+    override fun exists(table: String, key: String) = database[table]?.containsKey(key) ?: false
+
     override fun <T> getById(table: String, id: String): T? = database[table]?.getValue(id) as T
     override fun <T> getAll(table: String): List<T> = (database[table]?.values?.toList() ?: emptyList()) as List<T>
-    override fun exists(table: String, key: String) = database[table]?.containsKey(key) ?: false
 }

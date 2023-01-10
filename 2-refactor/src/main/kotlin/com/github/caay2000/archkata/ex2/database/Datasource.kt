@@ -1,4 +1,4 @@
-package com.github.caay2000.archkata.ex3x.infra
+package com.github.caay2000.archkata.ex2.database
 
 interface Datasource {
 

@@ -1,7 +1,7 @@
 package com.github.caay2000.archkata.ex3x.database
 
-import com.github.caay2000.archkata.ex3x.infra.Datasource
 import com.github.caay2000.archkata.ex3x.model.User
+import com.github.caay2000.archkata.libraries.db.Datasource
 
 class UserRepository(private val datasource: Datasource) {
 

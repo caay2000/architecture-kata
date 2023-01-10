@@ -1,4 +1,4 @@
-package com.github.caay2000.archkata.ex4.infra
+package com.github.caay2000.archkata.libraries.db
 
 @Suppress("UNCHECKED_CAST")
 class InMemoryDatasource : Datasource {

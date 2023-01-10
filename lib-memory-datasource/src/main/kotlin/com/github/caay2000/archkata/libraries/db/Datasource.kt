@@ -1,4 +1,4 @@
-package com.github.caay2000.archkata.ex3.infra
+package com.github.caay2000.archkata.libraries.db
 
 interface Datasource {
 
@@ -6,4 +6,5 @@ interface Datasource {
     fun <T> getById(table: String, id: String): T?
     fun <T> getAll(table: String): List<T>
     fun exists(table: String, key: String): Boolean
+    fun clean()
 }

@@ -1,19 +1,16 @@
 package com.github.caay2000.archkata.ex3x.service
 
 import com.github.caay2000.archkata.ex3x.database.UserRepository
-import com.github.caay2000.archkata.ex3x.infra.Datasource
 import com.github.caay2000.archkata.ex3x.infra.DateProvider
 import com.github.caay2000.archkata.ex3x.infra.IdGenerator
 import com.github.caay2000.archkata.ex3x.model.Message
 import com.github.caay2000.archkata.ex3x.model.User
 
 class SocialNetworkService(
-    datasource: Datasource,
+    private val userRepository: UserRepository,
     private val idGenerator: IdGenerator,
     private val dateProvider: DateProvider
 ) {
-
-    private val userRepository: UserRepository = UserRepository(datasource)
 
     fun createUser(email: String, name: String): String {
         val user = User(idGenerator.generate(), email, name)

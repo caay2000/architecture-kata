@@ -21,6 +21,8 @@ tasks.test {
 }
 
 dependencies {
+    implementation(project(":lib-memory-datasource"))
+
     implementation("io.ktor:ktor-server-core:2.2.1")
     implementation("io.ktor:ktor-server-netty:2.2.1")
     implementation("io.ktor:ktor-server-content-negotiation:2.2.1")
