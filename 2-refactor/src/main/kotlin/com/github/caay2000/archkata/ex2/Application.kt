@@ -2,11 +2,8 @@ package com.github.caay2000.archkata.ex2
 
 import com.github.caay2000.archkata.ex2.service.SocialNetworkService
 import io.ktor.http.HttpStatusCode
-import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.Application
 import io.ktor.server.application.call
-import io.ktor.server.application.install
-import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.request.receive
 import io.ktor.server.response.respond
 import io.ktor.server.routing.get
@@ -22,7 +19,6 @@ fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 fun Application.module() {
     start()
     configureRouting()
-    configureSerialization()
 }
 
 fun Application.start() {
@@ -61,11 +57,5 @@ fun Application.configureRouting() {
             val result = socialNetworkService.follow(UUID.fromString(id), UUID.fromString(followId))
             call.respond(HttpStatusCode.NoContent, result)
         }
-    }
-}
-
-fun Application.configureSerialization() {
-    install(ContentNegotiation) {
-        json()
     }
 }

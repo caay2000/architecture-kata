@@ -11,7 +11,7 @@ import org.json.JSONObject
 import org.junit.jupiter.api.Test
 import org.skyscreamer.jsonassert.JSONAssert
 
-class ApplicationTest {
+class ApplicationTestEx4 {
 
     @Test
     fun `create user`() = testApplication {
@@ -21,9 +21,9 @@ class ApplicationTest {
 
         val responseBody = response.bodyAsText()
         val id = JSONObject(responseBody).getString("id")
-        val expected = """ { "id": "$id", "email": "example@test.com", "name": "myName" } """
+        val expected = """ { "id": "$id", "email": "example@test.com", "name": "myName", "messages" : [], "follows": [] } """
         assertThat(response.status).isEqualTo(HttpStatusCode.Created)
-        JSONAssert.assertEquals(responseBody, expected, true)
+        JSONAssert.assertEquals(expected, responseBody, true)
     }
 
     @Test
@@ -38,12 +38,12 @@ class ApplicationTest {
         val id1 = JSONObject(responseBody1).getString("id")
         val id2 = JSONObject(responseBody2).getString("id")
 
-        val expected1 = """ { "id": "$id1", "email": "example@test.com", "name": "myName" } """
-        val expected2 = """ { "id": "$id2", "email": "example2@test.com", "name": "anotherName" } """
+        val expected1 = """ { "id": "$id1", "email": "example@test.com", "name": "myName", "messages" : [], "follows": []  } """
+        val expected2 = """ { "id": "$id2", "email": "example2@test.com", "name": "anotherName", "messages" : [], "follows": []  } """
         assertThat(response1.status).isEqualTo(HttpStatusCode.Created)
         assertThat(response2.status).isEqualTo(HttpStatusCode.Created)
-        JSONAssert.assertEquals(response1.bodyAsText(), expected1, true)
-        JSONAssert.assertEquals(response2.bodyAsText(), expected2, true)
+        JSONAssert.assertEquals(expected1, response1.bodyAsText(), true)
+        JSONAssert.assertEquals(expected2, response2.bodyAsText(), true)
     }
 
     @Test
@@ -61,7 +61,7 @@ class ApplicationTest {
         val date = JSONObject(responseBody).getString("date")
         val expected = """ { "id": "$msgId", "user": "myName", "userId": "$userId", "message": "Hello, how are you?", "date": "$date" } """
         assertThat(response.status).isEqualTo(HttpStatusCode.Created)
-        JSONAssert.assertEquals(responseBody, expected, true)
+        JSONAssert.assertEquals(expected, responseBody, true)
     }
 
     @Test
@@ -91,12 +91,11 @@ class ApplicationTest {
                         "date": "$date"
                     }
                 ],
-
                 "follows": []
             }
         """.trimMargin()
         assertThat(response.status).isEqualTo(HttpStatusCode.OK)
-        JSONAssert.assertEquals(responseBody, expected, true)
+        JSONAssert.assertEquals(expected, responseBody, true)
     }
 
     @Test
@@ -154,7 +153,7 @@ class ApplicationTest {
             }
         """.trimMargin()
         assertThat(response.status).isEqualTo(HttpStatusCode.OK)
-        JSONAssert.assertEquals(responseBody, expected, true)
+        JSONAssert.assertEquals(expected, responseBody, true)
     }
 
     @Test
@@ -204,6 +203,6 @@ class ApplicationTest {
             }
         """.trimMargin()
         assertThat(response.status).isEqualTo(HttpStatusCode.OK)
-        JSONAssert.assertEquals(responseBody, expected, true)
+        JSONAssert.assertEquals(expected, responseBody, true)
     }
 }

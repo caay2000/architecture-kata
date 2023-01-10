@@ -1,6 +1,6 @@
 package com.github.caay2000.archkata.ex4.application
 
-import java.time.LocalDateTime
+import kotlinx.datetime.LocalDateTime
 
 interface DateProvider {
 

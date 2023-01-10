@@ -5,5 +5,5 @@ data class User(
     val email: String,
     val name: String,
     val messages: MutableList<Message> = mutableListOf(),
-    val follows: MutableList<String> = mutableListOf()
+    val follows: MutableList<Follow> = mutableListOf()
 )

@@ -11,7 +11,7 @@ import org.json.JSONObject
 import org.junit.jupiter.api.Test
 import org.skyscreamer.jsonassert.JSONAssert
 
-class ApplicationTest {
+class ApplicationTestEx3 {
 
     @Test
     fun `create user`() = testApplication {

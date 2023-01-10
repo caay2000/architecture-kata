@@ -1,6 +1,6 @@
 package com.github.caay2000.archkata.ex4.domain
 
-import java.time.LocalDateTime
+import kotlinx.datetime.LocalDateTime
 
 data class Message(
     val id: String,

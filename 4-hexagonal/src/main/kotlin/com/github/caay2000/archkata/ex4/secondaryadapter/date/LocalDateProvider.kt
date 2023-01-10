@@ -1,9 +1,11 @@
 package com.github.caay2000.archkata.ex4.secondaryadapter.date
 
 import com.github.caay2000.archkata.ex4.application.DateProvider
-import java.time.LocalDateTime
+import kotlinx.datetime.Clock
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 
 class LocalDateProvider : DateProvider {
 
-    override fun now() = LocalDateTime.now()
+    override fun now() = Clock.System.now().toLocalDateTime(TimeZone.UTC)
 }
